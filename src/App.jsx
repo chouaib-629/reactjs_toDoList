@@ -6,26 +6,32 @@ function App() {
   const [todos, setTodos] = useState( [] )
   const [inputValue, setInputValue] = useState('')
 
-  function handleAddTodo( newTodo ) {
+  const [editedIndex, setEditedIndex] = useState(-1);
+
+  const handleAddTodo = (newTodo) => {
     const newTodosList = [...todos, newTodo];
-    persistData(newTodosList)
+    persistData(newTodosList);
     setTodos(newTodosList);
-  }
-  
-  function handleDeleteTodo( index ) {
-    const newTodosList = todos.filter( (todo, todoIndex) => {
-      return index !== todoIndex;
-    })
-    persistData(newTodosList)
-    setTodos(newTodosList)
-  }
-  
-  function handleEditTodo( index ) {
-    const valueToBeEdited = todos[index]
-    setInputValue(valueToBeEdited)
-    handleDeleteTodo(index)
-  }
-  
+  };
+
+  const handleDeleteTodo = (index) => {
+    const newTodosList = todos.filter((todo, todoIndex) => index !== todoIndex);
+    persistData(newTodosList);
+    setTodos(newTodosList);
+  };
+
+  const handleEditTodo = (index) => {
+    setEditedIndex(index);
+  };
+
+  const saveEdit = (index, newValue) => {
+    const newTodos = [...todos];
+    newTodos[index] = newValue;
+    setTodos(newTodos);
+    persistData(newTodos);
+    setEditedIndex(-1);
+  };
+
   function persistData( newList ) {
     localStorage.setItem('todos', JSON.stringify( {todos: newList} ))
   }
@@ -53,9 +59,11 @@ function App() {
       />
 
       <List 
-        todos={ todos } 
-        handleEditTodo={ handleEditTodo }
-        handleDeleteTodo={ handleDeleteTodo } 
+        todos={todos} 
+        handleEditTodo={handleEditTodo}
+        handleDeleteTodo={handleDeleteTodo} 
+        saveEdit={saveEdit}
+        editedIndex={editedIndex}
       />
     </>
   )
