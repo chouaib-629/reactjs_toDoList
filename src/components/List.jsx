@@ -1,21 +1,21 @@
-import Card from './Card'
+import Card from './Card';
 
-export default function List( props ) {   
-    const {todos} = props
+export default function List(props) {   
+    const { todos, editedIndex, handleEditTodo, handleDeleteTodo, saveEdit } = props;
 
-  return (
-    <ul className='main'>
-        {todos.map( (todo, todoIndex) => {
-            return (
+    return (
+        <ul className='main'>
+            {todos.map((todo, todoIndex) => (
                 <Card 
-                    {...props} 
                     key={todoIndex} 
                     index={todoIndex} 
-                >
-                    <p> {todo} </p>
-                </Card>
-            )
-        } )}
-    </ul>
-  )
+                    todo={todo}
+                    editMode={todoIndex === editedIndex}
+                    handleEditTodo={handleEditTodo}
+                    handleDeleteTodo={handleDeleteTodo}
+                    saveEdit={saveEdit}
+                />
+            ))}
+        </ul>
+    );
 }
