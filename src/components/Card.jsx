@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 export default function Card(props) {
     const {
@@ -11,6 +11,8 @@ export default function Card(props) {
     } = props;
     const [editValue, setEditValue] = useState(todo);
 
+    const inputRef = useRef(null);
+
     const handleChange = (e) => {
         setEditValue(e.target.value);
     };
@@ -21,10 +23,17 @@ export default function Card(props) {
         }
     };
 
+    useEffect(() => {
+        if (editMode && inputRef.current) {
+            inputRef.current.focus();
+        }
+    }, [editMode]);
+
     return (
         <li className="todoItem">
             {editMode ? (
                 <input
+                    ref={inputRef}
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     type="text"
                     value={editValue}
