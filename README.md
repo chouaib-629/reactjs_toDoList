@@ -51,19 +51,13 @@ To get a local copy of the website up and running, follow these steps:
     npm install
     ```
 
-4. **Initialize Tailwind CSS:**
-
-    ```bash
-    npx tailwindcss init -p
-    ```
-
-5. **Start the developement server:**
+4. **Start the developement server:**
 
     ```bash
     npm run dev
     ```
 
-6. **Open the website in your web browser:**
+5. **Open the website in your web browser:**
 
 - Open `https://localhost:5173` in your web browser to view the website.
 
